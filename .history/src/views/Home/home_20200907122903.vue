@@ -19,8 +19,8 @@
               </b-nav-form>
 
               <b-nav-item-dropdown text="" right>
-                <b-dropdown-item >Berdasarkan Nama</b-dropdown-item>
-                <b-dropdown-item >Terbaru</b-dropdown-item>
+                <b-dropdown-item v-b-modal.modal-edit>Edit</b-dropdown-item>
+                <b-dropdown-item v-b-modal.modal-delete>Delete</b-dropdown-item>
                 <b-dropdown-item href="#">RU</b-dropdown-item>
                 <b-dropdown-item href="#">FA</b-dropdown-item>
               </b-nav-item-dropdown>
@@ -51,39 +51,67 @@
       <b-modal id="modal-edit" ref="modal" hide-footer title="Edit">
                 <form ref="form">
                   <b-form-group  
+                      id="fieldset-1"
                       label="Enter Id"
                     >
                     <b-form-input type="number"
+                      value=''
                       v-model="form.id"
                       required
                     ></b-form-input>
                     </b-form-group>
                     <b-form-group
+                      id="fieldset-1"
                       label="Enter Product Name"
+                      label-for="input-1"
+                      :invalid-feedback="invalidFeedback"
+                      :valid-feedback="validFeedback"
+                      :state="state"
                     >
                     <b-form-input
+                      id=""
+                      value=1
                       v-model="form.name"
+                      required
                     ></b-form-input>
                     </b-form-group>
 
                   <b-form-group
+                      description=""
                       label="Enter Price"
+                      label-for="input-1"
+                      :invalid-feedback="invalidFeedback"
+                      :valid-feedback="validFeedback"
+                      :state="state"
                     >
                     <b-form-input
                       v-model="form.price"
+                      name="price"
+                      required
                     ></b-form-input>
                     </b-form-group>
 
                   <b-form-group
+                      id="fieldset-1"
+                      description=""
                       label="Enter URL Image"
+                      label-for="input-1"
+                      :invalid-feedback="invalidFeedback"
+                      :valid-feedback="validFeedback"
+                      :state="state"
                     >
                     <b-form-input
+                      id=""
                       v-model="form.images"
                       required
                     ></b-form-input>
                     </b-form-group>
-                    <button class="btn btn-primary" @click="edit()">submit</button>     
+                
+                    <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
+                    <b-button class="mt-2" variant="outline-warning" block @click="edit()">Submit</b-button>
+                    
                 </form>
+               
               </b-modal>
 
              
@@ -100,32 +128,46 @@
                     <b-icon-plus v-b-modal.modal-1></b-icon-plus>
                   </span>
                     <b-modal id="modal-1" ref="modal" hide-footer title="Submit Your Name">
-                      <form>
-                        <b-form-group
-                            description="Let us know your name."
-                            label="Enter Product Name"
-                          >
-                          <b-form-input
-                            v-model="form.name"
-                          ></b-form-input>
-                          </b-form-group>
-                        <b-form-group
-                            label="Enter Price"
-                          >
-                          <b-form-input
-                            v-model="form.price"
-                          ></b-form-input>
-                          </b-form-group>
+                <form ref="form">
+                  <b-form-group
+                      description="Let us know your name."
+                      label="Enter Product Name"
+                    >
+                    <b-form-input
+                      v-model="form.name"
+                      required
+                    ></b-form-input>
+                    </b-form-group>
+                  <b-form-group
+                      description=""
+                      label="Enter Price"
+                      label-for="input-1"
+                      :invalid-feedback="invalidFeedback"
+                      :valid-feedback="validFeedback"
+                      :state="state"
+                    >
+                    <b-form-input
+                      v-model="form.price"
+                      required
+                    ></b-form-input>
+                    </b-form-group>
 
-                        <b-form-group
-                            label="Enter URL Image"
-                          >
-                          <b-form-input
-                            v-model="form.images"
-                          ></b-form-input>
-                          </b-form-group>
-                          <button class="btn btn-primary" @click="addProduct()">Submit</button>
-                      </form>
+                  <b-form-group
+                      description=""
+                      label="Enter URL Image"
+                    >
+                    <b-form-input
+                      id=""
+                      v-model="form.images"
+                      required
+                    ></b-form-input>
+                    </b-form-group>
+                
+                    <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
+                    <b-button class="mt-2" variant="outline-warning" block @click="addProduct()">Submit</b-button>
+                    
+                </form>
+               
               </b-modal>
           </div>
 
@@ -139,7 +181,7 @@
                 <h3 class="price">{{ item.price }} </h3> 
                 <div>
                   <b-button variant="info" v-b-modal.modal-edit>Edit</b-button>
-                  <b-button variant="danger ml-2" v-b-modal.modal-delete>Delete</b-button>
+                  <b-button variant="danger ml-2">Delete</b-button>
                 </div>
                
             </div>
@@ -204,6 +246,7 @@ export default {
       try {
         const response = axios.put(process.env.VUE_APP_URL, this.form)
         this.data = response.data
+        this.id = ''
       } catch (err) {
         console.log(err)
       }

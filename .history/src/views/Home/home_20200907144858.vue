@@ -124,7 +124,7 @@
                             v-model="form.images"
                           ></b-form-input>
                           </b-form-group>
-                          <button class="btn btn-primary" @click="addProduct()">Submit</button>
+                          <button class="btn btn-primary"  block @click="addProduct()">Submit</button>
                       </form>
               </b-modal>
           </div>

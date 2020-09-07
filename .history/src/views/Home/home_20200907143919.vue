@@ -53,10 +53,12 @@
                   <b-form-group  
                       label="Enter Id"
                     >
+                    
                     <b-form-input type="number"
                       v-model="form.id"
                       required
                     ></b-form-input>
+                    <h2>{{form.id}}</h2>
                     </b-form-group>
                     <b-form-group
                       label="Enter Product Name"
@@ -82,7 +84,7 @@
                       required
                     ></b-form-input>
                     </b-form-group>
-                    <button class="btn btn-primary" @click="edit()">submit</button>     
+                    <b-button class="mt-2" variant="outline-warning" @click="edit()">Submit</b-button>     
                 </form>
               </b-modal>
 
@@ -100,32 +102,34 @@
                     <b-icon-plus v-b-modal.modal-1></b-icon-plus>
                   </span>
                     <b-modal id="modal-1" ref="modal" hide-footer title="Submit Your Name">
-                      <form>
-                        <b-form-group
-                            description="Let us know your name."
-                            label="Enter Product Name"
-                          >
-                          <b-form-input
-                            v-model="form.name"
-                          ></b-form-input>
-                          </b-form-group>
-                        <b-form-group
-                            label="Enter Price"
-                          >
-                          <b-form-input
-                            v-model="form.price"
-                          ></b-form-input>
-                          </b-form-group>
+                <form>
+                  <b-form-group
+                      description="Let us know your name."
+                      label="Enter Product Name"
+                    >
+                    <b-form-input
+                      v-model="form.name"
+                      required
+                    ></b-form-input>
+                    </b-form-group>
+                  <b-form-group
+                      label="Enter Price"
+                    >
+                    <b-form-input
+                      v-model="form.price"
+                      required
+                    ></b-form-input>
+                    </b-form-group>
 
-                        <b-form-group
-                            label="Enter URL Image"
-                          >
-                          <b-form-input
-                            v-model="form.images"
-                          ></b-form-input>
-                          </b-form-group>
-                          <button class="btn btn-primary" @click="addProduct()">Submit</button>
-                      </form>
+                  <b-form-group
+                      label="Enter URL Image"
+                    >
+                    <b-form-input
+                      v-model="form.images"
+                    ></b-form-input>
+                    </b-form-group>
+                    <b-button class="mt-2" variant="outline-warning" block @click="addProduct()">Submit</b-button>
+                </form>
               </b-modal>
           </div>
 
