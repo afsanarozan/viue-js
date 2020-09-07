@@ -1,5 +1,7 @@
-<<<<<<< HEAD
+
 # week-5
+
+just studying
 
 ## Project setup
 ```
