@@ -1,27 +1,36 @@
 <template>
-    
+<div>
+    <div class="card mt-5 img_grid"  style="width: 15rem; background: rgba(190, 195, 202, 0); cursor : pointer; border: none;">
+            <img  :src=images class="card-img-top" :alt="names" />
+            <h2 class="name">{{ names }}</h2>
+            <h3 class="price">{{ price }} </h3> 
+            <div>
+            </div>
+            
+        </div>
+</div>
 </template>
 
 <script>
 
 export default {
-    name: "Items",
+    name: "items",
     props: {
+        id : {
+            type:Number,
+            required: false,
+        },
         names : {
             type:String,
-            required: true
+            required: true,
         },
-        description : {
+        price : {
             type:String,
-            required: true
-        },
-        price: {
-            type:String,
-            required: true
+            required: true,
         },
         images: {
             type:String,
-            required: true
+            required: true,
         }
     },
   }

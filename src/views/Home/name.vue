@@ -3,9 +3,8 @@
       <div class="container-fluid">
       <div class="row">
         <b-navbar toggleable="lg col-md-8 food" type="light" variant="white">
-          <b-icon icon="menu-button-wide" class="h3 mt-2" style="color:black"></b-icon>
-            <navbar-brand href="#" style="font-family: Airbnb Cereal App;" class="text-center">Food Items</navbar-brand>      
-          <b-navbar-nav>
+            <b-navbar-brand href="#" style="font-family: Airbnb Cereal App;">Food Items</b-navbar-brand>      
+          <b-navbar-nav class="ml-auto">
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           </b-navbar-nav>
 
@@ -14,15 +13,14 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-            
-                <router-link to="/search">
-                <b-icon icon="search" class="h3 mt-2" style="color:black"></b-icon>
-                </router-link>
+              <b-nav-form>
+                <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+                <b-button size="sm" class="my-2 my-sm-0" type="submit" v-model='max'>Search</b-button>
+              </b-nav-form>
 
               <b-nav-item-dropdown text="" right>
-  
-                <b-dropdown-item to="/name">Berdasarkan Nama</b-dropdown-item>
-                <b-dropdown-item>Terbaru</b-dropdown-item>
+                <b-dropdown-item @click="loadName()">Berdasarkan Nama</b-dropdown-item>
+                <b-dropdown-item >Terbaru</b-dropdown-item>
                 <b-dropdown-item href="#">RU</b-dropdown-item>
                 <b-dropdown-item href="#">FA</b-dropdown-item>
               </b-nav-item-dropdown>
@@ -33,61 +31,54 @@
           <b-navbar-brand href="#">Cart<span class="lingkaran">{{ cart.length }}</span></b-navbar-brand>
         </b-navbar>
       </div>
+      
+      
+
+             
+      
       </div>
     
   <!-- Leftbar -->
        <div class="row">
           <div class="col-md-1 bg-white" style="background: #FFFFFF; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); position: relative;">
-                <div style="font-size : 4em">
-                  <router-link to="/history">
-                    <b-icon icon="clipboard-check" class="h1 ml-4" style="color:black"></b-icon>
+                <router-link to="/history">
+                  <img src='../../assets/clipboard.png' alt="" class="mt-2 leftbar" style="position:absolute; left: 30%; top:30px; cursor: pointer;">
                   </router-link>
-                    <b-icon icon="cart-plus" class="h1 ml-4" style="color:black;"></b-icon>
-                    <b-icon icon="plus" class="h1 ml-4" style="color:green; outline:none; cursor:pointer;" v-b-modal.modal-1></b-icon>
-                </div>  
+                  <img src='../../assets/fork.png' alt="" class="mt-2 leftbar" style="position:absolute; left: 30%; top: 131px; cursor: pointer;">
+                  <span style="font-size: 3em; color: green; position:absolute; left: 30%; top: 200px; cursor: pointer;">
+                    <b-icon-plus v-b-modal.modal-1></b-icon-plus>
+                  </span>
+                    
           </div>
 
 
       <!-- RightBar -->
-        <div class="place col-md-7 d-flex">
-          <div class="cont" v-for="item in data" :key="item.id" >
-            <div @click="addCart(item)">
+        <div class="place col-md-7 d-flex" >
+          
+          <div class="cont" v-for="item in data" :key="item.id" @click="addCart(item)">
+            <div>
            <Items 
            :names="item.name" 
            :price="item.price" 
            :images="item.images" />
            </div>
-                <b-button variant="success" v-b-modal.modal-edit>Edit</b-button>
-                <b-button variant="info ml-2" v-b-modal.modal-delete>Delete</b-button>   
            </div>
           </div>
             
             <div class="col-md-4" style="background: #FFFFFF;border: 1px solid #CECECE;font-family: Airbnb Cereal App;">
-              <div v-if="cart.length === 0">
-
-                <img 
-                class="empty-img"
-                src="@/assets/food-and-restaurant.png"
-                alt="food-and-restaurant"
-                />
-
-                <p class="text-center">Your cart is empty</p>
-                <p class="text-center">Please add some items from the menu</p>
-              </div>
-             
-                    <div v-for="item in cart" :key="item.id">  
-                    <b-img left :src="item.images" alt="Left image" style="width:7em; margin-left: 10px;"></b-img>
-                        <h5 class="name" style="margin-left:130px">{{ item.name }}</h5>
-                        <p class="price" style="margin-left:130px">{{ item.price }} </p><br> 
-                   </div>
-                   
               <div>
-              </div>
-                    
-                   <div v-if="cart.length > 0">
-                      <b-button block variant="success" >CheckOut</b-button>
-                      <b-button block variant="danger" >Cancel</b-button>        
-                   </div>
+                      <div class="card mt-5 box check" style="width: 15rem; background: rgba(190, 195, 202, 0); cursor : pointer; border: none;"  v-for="item in cart" :key="item.id">
+                          <img  :src=item.images class="card-img-top" :alt="item"/>
+                            <h2 class="name">{{ item.name }}</h2>
+                            <h3 class="price">{{ item.price }} </h3> 
+                      <div>
+                      </div>
+                      
+                   </div>          
+                   
+              <b-button block variant="success" style="margin-top : 700px;">Block Level Button</b-button>
+              <b-button block variant="primary">Block Level Button</b-button>        
+            </div>
 
             </div>
             </div>
@@ -182,7 +173,7 @@ import Items from "../../components/Items"
 
 
 export default {
-  name: 'home',
+  name: 'name',
   components : {
     Items,
   },
@@ -204,7 +195,7 @@ export default {
       },
 
    async mounted() {
-    this.load()
+    this.loadName()
   },
       
 
@@ -212,12 +203,10 @@ export default {
     addCart(data) {
       this.cart.push(data)
     },
-      async load(){
-      const response = await axios.get(process.env.VUE_APP_URL)
+    async loadName(){
+      const response = await axios.get('http://localhost:2000/product/name')
       this.data = response.data
     },
-    
-   
    
     addProduct(){
       try {
@@ -247,19 +236,7 @@ export default {
           data: {id : this.form.id}
         })
         this.data = response.data  
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    search(){
-      try {
-        // const response = axios.delete(process.env.VUE_APP_URL, this.form)
-        const response = axios({
-          method: "GET",
-          url: 'http://localhost:2000/product/search?name={{name}}' ,
-          data: {name : this.form.name}
-        })
-        this.data = response.data  
+        this.$route.push({path : '/'})
       } catch (err) {
         console.log(err)
       }
@@ -308,16 +285,9 @@ export default {
     background: rgba(190, 195, 202, 0);
     position: relative;
 }
-.image_grid input {
-    display: none;
-  }
 
-  
-.image_grid input:checked + .caption {
-    background: rgba(0, 0, 0, 0.5);
-  }
 
-  .image_grid input:checked + .caption::after {
+.check::after{
     content:'';
     display: block;
     width: 100%;
@@ -325,9 +295,5 @@ export default {
     position: absolute;
     z-index: 1;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0,0,0,0.4))
-}
-.empty-img{
-  margin-left: 140px;
-  
 }
 </style>
