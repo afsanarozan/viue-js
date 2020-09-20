@@ -134,7 +134,7 @@
             this.config
           );
           this.product = response.data.data;
-          alert(response.data.message);
+          alert("Data Diedit");
           this.getProduct();
           this.$nextTick(() => {
             this.$bvModal.hide("modal-prevent-closing");

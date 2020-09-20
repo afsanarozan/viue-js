@@ -10,7 +10,7 @@
       ok-title="Add"
       hide-footer
     >
-      <form ref="form">
+      <form ref="form" @submit.stop.prevent="addProduct">
         <b-form-group
           :state="nameState"
           label="Name"
@@ -64,7 +64,7 @@
             required
           ></b-form-input>
         </b-form-group>
-            <button class="btn btn-primary" @click="addProduct()">add</button>     
+            <button class="btn btn-primary" >add</button>     
       </form>
     </b-modal>
   </div>
@@ -111,12 +111,12 @@
           formData.append("name", this.name);
           formData.append("image", this.attachment);
           formData.append("price", this.price);
-          const response = await axios.post(
+          await axios.post(
             `${process.env.VUE_APP_URL}/api/product`,
             formData,
             this.config
           );
-          alert(response.data.message);
+          alert("Data Ditambahkan");
           this.$router.push({ name: "home" });
           this.getProduct();
           this.$nextTick(() => {

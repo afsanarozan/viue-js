@@ -29,8 +29,9 @@
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
-        <b-navbar toggleable="lg col-md-4 cart justify-content-center"  variant="faded" type="light">
-          <b-navbar-brand href="#">Cart<span class="lingkaran">{{ cart.length }}</span></b-navbar-brand>
+
+        <b-navbar toggleable="lg col-md-4 cart justify-content-center head-cart"  variant="faded" type="light">
+          <b-navbar-brand class="text-cart">Cart<span class="lingkaran">{{ cart.length }}</span></b-navbar-brand>
         </b-navbar>
       </div>
       </div>
@@ -63,6 +64,9 @@
            </div>
           </div>
             <div class="col-md-4" style="background: #FFFFFF;border: 1px solid #CECECE;font-family: Airbnb Cereal App;">
+              <b-navbar toggleable="lg col-md-4 justify-content-center head-cart2"  variant="faded" type="light">
+                  <b-navbar-brand class="text-cart2" style="color:white">Cart<span class="lingkaran2">{{ cart.length }}</span></b-navbar-brand>
+                </b-navbar>
               <div v-if="cart.length === 0">
                 <img 
                 class="empty-img"
@@ -99,21 +103,8 @@
 
             </div>
             </div>
-             <b-modal id="modal-delete" hide-footer title="Delete">
-                <form>
-                  <b-form-group  
-                      label="Enter Id"
-                    >
-                    <b-form-input type="number"
-                      id="name-input"
-                      v-model="form.id"
-                    ></b-form-input>
-                    </b-form-group>
-                    <button class="btn btn-primary" @click="delet(id)">Submit</button>
-                    
-                </form>
-              </b-modal>
                 <modalEdit :id="itemId" :getProduct="getProduct" />
+                
   </div>
   
   
@@ -179,19 +170,6 @@ export default {
       clear() {
         this.cart = [];
       },
-    
-   
-   
-    // addProduct(){
-    //   try {
-    //     const response = axios.post(process.env.VUE_APP_URL, this.form )
-    //     this.data = response.data 
-    //   } catch (err) {
-    //      console.log(err)
-    //   }
-      
-    // },
-
     edit(){
       try {
         const response = axios.put(`${process.env.VUE_APP_URL}/api/product`, this.form)
@@ -200,27 +178,13 @@ export default {
         console.log(err)
       }
     },
-
-    delet(){
-      try {
-        // const response = axios.delete(process.env.VUE_APP_URL, this.form)
-        const response = axios({
-          method: "DELETE",
-          url: `${process.env.VUE_APP_URL}/api/product`,
-          data: {id : this.form.id}
-        })
-        this.data = response.data  
-      } catch (err) {
-        console.log(err)
-      }
-    },
     deleteProduct: async function(id) {
         try {
-          const response = await axios.delete(
+          await axios.delete(
             `${process.env.VUE_APP_URL}/api/product/${id}`,
             this.config
           );
-          alert(response.data.message);
+          alert("Data Dihapus");
           this.getProduct();
         } catch (error) {
           console.error(error);
@@ -309,9 +273,49 @@ export default {
     position: absolute;
     z-index: 1;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0,0,0,0.4))
-}
-.empty-img{
-  margin-left: 140px;
+  }
+  .empty-img{
+    margin-left: 140px;
+  }
   
-}
+  
+
+  @media only screen and (max-width: 767px) {
+    .head-cart {
+    background-color: white;
+    height : 0px;
+    display : none;
+    }
+
+    .lingkaran {
+      display: none;
+    }
+    
+  }
+
+  @media only screen and (max-width: 767px) {
+    .head-cart2 {
+    background-color:#808080;
+    }
+    .text-cart2{
+      color:black;
+    }
+    .lingkaran2 {
+    background: #57CAD5;
+    border-radius: 100%;
+    text-align: center;
+    color: #FFFFFF;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-left: 10px;    
+
+    }
+
+
+  }
+
+ 
+  
+
 </style>
