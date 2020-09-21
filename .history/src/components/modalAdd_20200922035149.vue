@@ -111,13 +111,12 @@
           formData.append("name", this.name);
           formData.append("image", this.attachment);
           formData.append("price", this.price);
-          const response = await axios.post(
+          const respawait axios.post(
             `${process.env.VUE_APP_URL}/api/product`,
             formData,
             this.config
           );
           alert("Data Ditambahkan");
-          this.data = response.data  
           this.$router.push({ name: "home" });
           this.getProduct();
           this.$nextTick(() => {

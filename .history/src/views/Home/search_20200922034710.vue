@@ -234,7 +234,7 @@ export default {
             this.config
           );
           alert("Data Dihapus");
-          this.data = response.data
+          this.data = 
         } catch (error) {
           console.error(error);
         }

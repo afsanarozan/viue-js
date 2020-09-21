@@ -117,7 +117,7 @@
             this.config
           );
           alert("Data Ditambahkan");
-          this.data = response.data  
+          this.da
           this.$router.push({ name: "home" });
           this.getProduct();
           this.$nextTick(() => {
