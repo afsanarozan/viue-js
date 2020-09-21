@@ -237,7 +237,7 @@ export default {
       this.cart.push(data)
     },
       async load(){
-      const response = await axios.get(`${process.env.VUE_APP_URL}/api/product/price`)
+      const response = await axios.get(`${process.env.VUE_APP_URL}/api/product/id/price`)
       this.data = response.data
     },
 

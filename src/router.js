@@ -10,45 +10,47 @@ import profile from './views/Profile/profile'
 
 Vue.use(VueRouter)
 
+const routes = [
+    {
+        path: "/",
+        name: "home",
+        component: home,
+    },
+    {
+        path: "/history",
+        name: "history",
+        component: about,
+    },
+    {
+        path: "/profile",
+        name: "profile",
+        component: profile,
+    },
+    {
+        path: "/name",
+        name: "name",
+        component: name
+    },
+    {
+        path: "/update",
+        name: "update",
+        component: update
+    },
+    {
+        path: "/price",
+        name: "price",
+        component: price
+    },
+    {
+        path: "/search",
+        name: "search",
+        component: search
+    },
+]
+
 const mainRouter = new VueRouter({
-    mode:'history',
-    routes: [
-        {
-            path: "/",
-            name: "home",
-            component: home,
-        },
-        {
-            path: "/history",
-            name: "history",
-            component: about,
-        },
-        {
-            path: "/profile",
-            name: "profile",
-            component: profile,
-        },
-        {
-            path: "/name",
-            name: "name",
-            component: name
-        },
-        {
-            path: "/update",
-            name: "update",
-            component: update
-        },
-        {
-            path: "/price",
-            name: "price",
-            component: price
-        },
-        {
-            path: "/search",
-            name: "search",
-            component: search
-        },
-    ],
+    mode: 'history',
+    routes,
 })
 
 export default  mainRouter
