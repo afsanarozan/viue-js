@@ -63,40 +63,39 @@
                 <b-button variant="info ml-2"  @click="deleteProduct(item.id)" >Delete</b-button>   
            </div>
           </div>
-            <div class="col-md-4" style="background: #FFFFFF;border: 1px solid #CECECE;font-family: Airbnb Cereal App;">
-              <b-navbar toggleable="lg col-md-4 justify-content-center head-cart2"  variant="faded" type="light">
-                  <b-navbar-brand class="text-cart2" style="color:white">Cart<span class="lingkaran2">{{ cart.length }}</span></b-navbar-brand>
-                </b-navbar>
-              <div v-if="cart.length === 0">
+          <div class="col-md-4" style="background: #FFFFFF;border: 1px solid #CECECE;font-family: Airbnb Cereal App;">
+            <b-navbar toggleable="lg col-md-4 justify-content-center head-cart2"  variant="faded" type="light">
+                <b-navbar-brand class="text-cart2" style="color:white">Cart<span class="lingkaran2">{{ cart.length }}</span></b-navbar-brand>
+              </b-navbar>
+            <div v-if="cart.length === 0">
                 <img 
                 class="empty-img"
                 src="@/assets/food-and-restaurant.png"
                 alt="food-and-restaurant"
                 />
-                <p class="text-center">Your cart is empty</p>
-                <p class="text-center">Please add some items from the menu</p>
-              </div>
+                  <p class="text-center">Your cart is empty</p>
+                  <p class="text-center">Please add some items from the menu</p>
+            </div>
              
-                    <div v-for="item in cart" :key="item.id">  
-                    <b-img left :src="showImage(item.images)" alt="Left image" style="width:7em; margin-left: 10px;"></b-img>
-                        <h5 class="name" style="margin-left:130px; margin-top:20px;">{{ item.name }}</h5>
-                        <h6 style="margin-left:130px;">{{ item.price }}</h6>
-                        <div class="mt-4" style="margin-top:0px;">
-                         <b-button-group size="sm" style="margin-top:-30px; margin-left:8px;">
+              <div v-for="item in cart" :key="item.id">  
+                <b-img left :src="showImage(item.images)" alt="Left image" style="width:7em; margin-left: 10px;"></b-img>
+                    <h5 class="name" style="margin-left:130px; margin-top:20px;">{{ item.name }}</h5>
+                    <h6 style="margin-left:130px;">{{ item.price }}</h6>
+                      <div class="mt-4" style="margin-top:0px;">
+                        <b-button-group size="sm" style="margin-top:-30px; margin-left:8px;">
                           <b-button @click="minus(item)" class="btn minus">-</b-button>
-                          <b-input-group size="sm">
-                            <b-form-input :value="amount(item)" style="text-align:center"></b-form-input>
-                          </b-input-group>
+                            <b-input-group size="sm">
+                              <b-form-input :value="amount(item)" style="text-align:center"></b-form-input>
+                            </b-input-group>
                           <b-button @click="plus(item)" class="btn plus">+</b-button>
-                        </b-button-group> 
-                        </div>
-                   </div>
-                   
-              <div>
+                      </b-button-group> 
+                      </div>
               </div>
+                  
                     
                    <div v-if="cart.length > 0">
-                      <b-button block variant="info" style="margin-top:20px;" >CheckOut</b-button>
+                     <h5>Total</h5>
+                      <b-button block variant="info" style="margin-top:20px;"  v-b-modal.modal-checkout>CheckOut</b-button>
                       <b-button block variant="danger" @click="clear">Cancel</b-button>      
                         
                    </div>
@@ -104,6 +103,56 @@
             </div>
             </div>
                 <modalEdit :id="itemId" :getProduct="getProduct" />
+                <b-modal
+      id="modal-checkout"
+      @show="onCheckout()"
+      @hidden="offCheckout()"
+      hide-footer
+      hide-header
+    >
+      <div class="row">
+        <div class="col-6">
+          <h4>Checkout</h4>
+          <p>Cashier : Afsana Rozan Naufal</p>
+        </div>
+        <div class="col-6">
+          <p style="text-align: right;">Receipt no: 01123434 </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <h6>Espresso</h6>
+        </div>
+        <div class="col-6 right">
+          <h6> Rp : 10.000</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <h6>Ppn 10%</h6>
+        </div>
+        <div class="col-6 right">
+          <h6></h6>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-12 right">
+          <h6></h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h6>Payment: Cash</h6>
+        </div>
+      </div>
+      <br />
+      <b-button block variant="primary">
+        Print
+      </b-button>
+      <h6 style="text-align: center; margin-top:10px">Or</h6>
+      <b-button block variant="danger">Send Mail</b-button>   
+    </b-modal>
                 
   </div>
   
