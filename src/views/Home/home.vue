@@ -244,7 +244,7 @@ export default {
         // const response = axios.delete(process.env.VUE_APP_URL, this.form)
         const response = axios({
           method: "GET",
-          url: 'http://localhost:2000/product/search?name={{name}}' ,
+          url: `http://localhost:2000/product/search?name='${name}'` ,
           data: {name : this.form.name}
         })
         this.data = response.data  

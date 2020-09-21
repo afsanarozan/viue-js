@@ -14,10 +14,10 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-              <b-nav-form>
-                <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="name"></b-form-input>
-                <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="search(name)">Search</b-button>
-              </b-nav-form>
+            
+                <router-link to="/search">
+                <b-icon icon="search" class="h3 mt-2" style="color:black"></b-icon>
+                </router-link>
 
               <b-nav-item-dropdown text="" right>
                 
@@ -31,7 +31,7 @@
         </b-navbar>
 
         <b-navbar toggleable="lg col-md-4 cart justify-content-center head-cart"  variant="faded" type="light">
-          <b-navbar-brand class="text-cart">Cart<span class="lingkaran">{{ cart.length }}</span></b-navbar-brand>
+          <b-navbar-brand class="text-cart">rt<span class="lingkaran">{{ cart.length }}</span></b-navbar-brand>
         </b-navbar>
       </div>
       </div>
@@ -167,7 +167,7 @@ import Items from "../../components/Items";
 
 
 export default {
-  name: 'search',
+  name: 'home',
   components : {
     Items,
     modalAdd,
@@ -229,12 +229,12 @@ export default {
     },
     deleteProduct: async function(id) {
         try {
-          const response = await axios.delete(
+          await axios.delete(
             `${process.env.VUE_APP_URL}/api/product/${id}`,
             this.config
           );
           alert("Data Dihapus");
-          this.data = response.data
+          this.getProduct();
         } catch (error) {
           console.error(error);
         }

@@ -14,10 +14,10 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-              <b-nav-form>
-                <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="name"></b-form-input>
-                <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="search(name)">Search</b-button>
-              </b-nav-form>
+            
+                <router-link to="/search">
+                <b-icon icon="search" class="h3 mt-2" style="color:black"></b-icon>
+                </router-link>
 
               <b-nav-item-dropdown text="" right>
                 
@@ -167,7 +167,7 @@ import Items from "../../components/Items";
 
 
 export default {
-  name: 'search',
+  name: 'home',
   components : {
     Items,
     modalAdd,
@@ -201,7 +201,7 @@ export default {
       this.cart.push(data)
     },
       async load(){
-      const response = await axios.get(`${process.env.VUE_APP_URL}/api/product`)
+      const response = await axios.get(`${process.env.VUE_APP_URL}/api/product/id/price`)
       this.data = response.data
     },
     plus(value) {

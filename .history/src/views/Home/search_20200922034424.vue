@@ -14,6 +14,8 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
+            
+                <b-navbar-nav class="ml-auto">
               <b-nav-form>
                 <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="name"></b-form-input>
                 <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="search(name)">Search</b-button>
@@ -167,7 +169,7 @@ import Items from "../../components/Items";
 
 
 export default {
-  name: 'search',
+  name: 'home',
   components : {
     Items,
     modalAdd,
@@ -229,12 +231,12 @@ export default {
     },
     deleteProduct: async function(id) {
         try {
-          const response = await axios.delete(
+          await axios.delete(
             `${process.env.VUE_APP_URL}/api/product/${id}`,
             this.config
           );
           alert("Data Dihapus");
-          this.data = response.data
+          this.getProduct();
         } catch (error) {
           console.error(error);
         }

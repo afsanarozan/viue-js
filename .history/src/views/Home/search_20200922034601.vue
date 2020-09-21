@@ -229,12 +229,12 @@ export default {
     },
     deleteProduct: async function(id) {
         try {
-          const response = await axios.delete(
+          await axios.delete(
             `${process.env.VUE_APP_URL}/api/product/${id}`,
             this.config
           );
           alert("Data Dihapus");
-          this.data = response.data
+          this.getProduct();
         } catch (error) {
           console.error(error);
         }
