@@ -205,7 +205,7 @@ export default {
     },
 
     showImage(images) {
-        return `${process.env.VUE_APP_URL}/${images}`;
+        return `/images/${images}`;
       },
 
     },
