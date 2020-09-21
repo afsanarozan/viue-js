@@ -29,8 +29,9 @@
             </b-navbar-nav>
           </b-collapse>
         </b-navbar>
-        <b-navbar toggleable="lg col-md-4 cart justify-content-center"  variant="faded" type="light">
-          <b-navbar-brand href="#">Cart<span class="lingkaran">{{ cart.length }}</span></b-navbar-brand>
+
+        <b-navbar toggleable="lg col-md-4 cart justify-content-center head-cart"  variant="faded" type="light">
+          <b-navbar-brand class="text-cart">Cart<span class="lingkaran">{{ cart.length }}</span></b-navbar-brand>
         </b-navbar>
       </div>
       </div>
@@ -55,142 +56,55 @@
             <div @click="addCart(item)">
            <Items 
            :names="item.name" 
-           :price="item.id" 
+           :price="item.price" 
            :images="showImage(item.images)" />
            </div>
                 <b-button variant="success" v-b-modal.modal-edit @click="itemId = item.id">Edit</b-button>
-                <b-button variant="info ml-2" v-b-modal.modal-delete>Delete</b-button>   
+                <b-button variant="info ml-2"  @click="deleteProduct(item.id)" >Delete</b-button>   
            </div>
           </div>
-            
             <div class="col-md-4" style="background: #FFFFFF;border: 1px solid #CECECE;font-family: Airbnb Cereal App;">
+              <b-navbar toggleable="lg col-md-4 justify-content-center head-cart2"  variant="faded" type="light">
+                  <b-navbar-brand class="text-cart2" style="color:white">Cart<span class="lingkaran2">{{ cart.length }}</span></b-navbar-brand>
+                </b-navbar>
               <div v-if="cart.length === 0">
-
                 <img 
                 class="empty-img"
                 src="@/assets/food-and-restaurant.png"
                 alt="food-and-restaurant"
                 />
-
                 <p class="text-center">Your cart is empty</p>
                 <p class="text-center">Please add some items from the menu</p>
               </div>
              
                     <div v-for="item in cart" :key="item.id">  
                     <b-img left :src="showImage(item.images)" alt="Left image" style="width:7em; margin-left: 10px;"></b-img>
-                    <p>{{item.images}}</p>
-                        <h5 class="name" style="margin-left:130px">{{ item.name }}</h5>
-                        <p class="price" style="margin-left:130px">{{ item.price }} </p><br> 
+                        <h5 class="name" style="margin-left:130px; margin-top:20px;">{{ item.name }}</h5>
+                        <h6 style="margin-left:130px;">{{ item.price }}</h6>
+                        <div class="mt-4" style="margin-top:0px;">
+                         <b-button-group size="sm" style="margin-top:-30px; margin-left:8px;">
+                          <b-button @click="minus(item)" class="btn minus">-</b-button>
+                          <b-input-group size="sm">
+                            <b-form-input :value="amount(item)" style="text-align:center"></b-form-input>
+                          </b-input-group>
+                          <b-button @click="plus(item)" class="btn plus">+</b-button>
+                        </b-button-group> 
+                        </div>
                    </div>
                    
               <div>
               </div>
                     
                    <div v-if="cart.length > 0">
-                      <b-button block variant="success" >CheckOut</b-button>
-                      <b-button block variant="danger" >Cancel</b-button>        
+                      <b-button block variant="info" style="margin-top:20px;" >CheckOut</b-button>
+                      <b-button block variant="danger" @click="clear">Cancel</b-button>      
+                        
                    </div>
 
             </div>
             </div>
-             <b-modal id="modal-delete" hide-footer title="Delete">
-                <form>
-                  <b-form-group  
-                      label="Enter Id"
-                    >
-                    <b-form-input type="number"
-                      id="name-input"
-                      v-model="form.id"
-                    ></b-form-input>
-                    </b-form-group>
-                    <button class="btn btn-primary" @click="delet(id)">Submit</button>
-                    
-                </form>
-              </b-modal>
                 <modalEdit :id="itemId" :getProduct="getProduct" />
-              <!-- <b-modal id="modal-edit" ref="modal" hide-footer title="Edit">
-                <form ref="form">
-                  <b-form-group  
-                      label="Enter Id"
-                    >
-                    <b-form-input type="number"
-                      v-model="form.id"
-                      required
-                    ></b-form-input>
-                    </b-form-group>
-                    <b-form-group
-                      label="Enter Product Name"
-                    >
-                    <b-form-input
-                      v-model="form.name"
-                    ></b-form-input>
-                    </b-form-group>
-
-                  <b-form-group
-                      label="Enter Price"
-                    >
-                    <b-form-input
-                      v-model="form.price"
-                    ></b-form-input>
-                    </b-form-group>
-
-                    <b-form-group
-                            label-for="image-input"
-                          >
-                            <b-form-file
-                            v-model="form.image"
-                              required
-                            ></b-form-file>
-                            
-                          </b-form-group>
-                    <button class="btn btn-primary" @click="edit()">submit</button>     
-                </form>
-              </b-modal> -->
-              <!-- <b-modal id="modal-1" ref="modal" hide-footer title="Submit Your Name" >
-                      <form>
-                        <b-form-group
-                            description="Let us know your name."
-                            label="Enter Product Name"
-                          >
-                          <b-form-input
-                            v-model="name"
-                          ></b-form-input>
-                          </b-form-group>
-                        <b-form-group
-                            label="Enter Price"
-                          >
-                          <b-form-input
-                            v-model="form.price"
-                          ></b-form-input>
-                          </b-form-group>
-
-                      
-                          <b-form-group
-                            :state="form.image"
-                            label="Image"
-                            label-for="image-input"
-                            label-cols="3"
-                            invalid-feedback="Image is required"
-                            style="font-weight: bold"
-                          >
-                            <b-form-file
-                              v-if="!image"
-                              @change="onFileChange"
-                              id="image-input"
-                              :state="imageState"
-                              placeholder="Choose a image or drop it here..."
-                              drop-placeholder="Drop file here..."
-                              required
-                            ></b-form-file>
-                            <img v-if="image" :src="image" />
-                            <button v-if="image" class="btn btn-danger" @click="removeImage">
-                              Remove image
-                            </button>
-                          </b-form-group>
-                          <button class="btn btn-primary" @click="addProduct()">Submit</button>
-                      </form>
-              </b-modal> -->
-          
+                
   </div>
   
   
@@ -204,7 +118,7 @@ import Items from "../../components/Items";
 
 
 export default {
-  name: 'update',
+  name: 'home',
   components : {
     Items,
     modalAdd,
@@ -212,13 +126,14 @@ export default {
   },
   
   data() {
-    return {  
+    return { 
+        btnPlus: true,
         form : {
           id:'',
           name: '',
           price:'',
           image: '',
-          date:''
+          date:'',
 
         },
         data : [],
@@ -237,22 +152,24 @@ export default {
       this.cart.push(data)
     },
       async load(){
-      const response = await axios.get(`${process.env.VUE_APP_URL}/api/product/lastupdate`)
+      const response = await axios.get(`${process.env.VUE_APP_URL}/api/product/id/lastupdate`)
       this.data = response.data
     },
-    
-   
-   
-    // addProduct(){
-    //   try {
-    //     const response = axios.post(process.env.VUE_APP_URL, this.form )
-    //     this.data = response.data 
-    //   } catch (err) {
-    //      console.log(err)
-    //   }
-      
-    // },
-
+    plus(value) {
+        value.amount += 1;
+    },
+    minus(value) {
+        value.amount -= 1;
+        if (value.amount === 0) {
+          let findIndex = this.items.data.findIndex(
+            (index) => index.id === value.id
+          );
+          this.items.data.splice(findIndex, 1);
+        }
+    },
+      clear() {
+        this.cart = [];
+      },
     edit(){
       try {
         const response = axios.put(`${process.env.VUE_APP_URL}/api/product`, this.form)
@@ -261,20 +178,18 @@ export default {
         console.log(err)
       }
     },
-
-    delet(){
-      try {
-        // const response = axios.delete(process.env.VUE_APP_URL, this.form)
-        const response = axios({
-          method: "DELETE",
-          url: `${process.env.VUE_APP_URL}/api/product`,
-          data: {id : this.form.id}
-        })
-        this.data = response.data  
-      } catch (err) {
-        console.log(err)
-      }
-    },
+    deleteProduct: async function(id) {
+        try {
+          await axios.delete(
+            `${process.env.VUE_APP_URL}/api/product/${id}`,
+            this.config
+          );
+          alert("Data Dihapus");
+          this.getProduct();
+        } catch (error) {
+          console.error(error);
+        }
+      },
     search(){
       try {
         // const response = axios.delete(process.env.VUE_APP_URL, this.form)
@@ -294,6 +209,11 @@ export default {
       },
 
     },
+    computed: {
+      amount : () => {
+        return (item) => item.amount;
+      }
+    }
 
     
     
@@ -353,9 +273,49 @@ export default {
     position: absolute;
     z-index: 1;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0,0,0,0.4))
-}
-.empty-img{
-  margin-left: 140px;
+  }
+  .empty-img{
+    margin-left: 140px;
+  }
   
-}
+  
+
+  @media only screen and (max-width: 767px) {
+    .head-cart {
+    background-color: white;
+    height : 0px;
+    display : none;
+    }
+
+    .lingkaran {
+      display: none;
+    }
+    
+  }
+
+  @media only screen and (max-width: 767px) {
+    .head-cart2 {
+    background-color:#808080;
+    }
+    .text-cart2{
+      color:black;
+    }
+    .lingkaran2 {
+    background: #57CAD5;
+    border-radius: 100%;
+    text-align: center;
+    color: #FFFFFF;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-left: 10px;    
+
+    }
+
+
+  }
+
+ 
+  
+
 </style>
