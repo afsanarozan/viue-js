@@ -3,28 +3,33 @@
       <div class="container-fluid">
       <div class="row">
         <b-navbar toggleable="lg col-md-8 food" type="light" variant="white">
-          <b-icon icon="menu-button-wide" class="h3 mt-2" style="color:black"></b-icon>
+            <b-icon icon="menu-button-wide" class="h3 mt-2" style="color:black"></b-icon>
+          <div class="col-8 text-center">  
             <navbar-brand href="#" style="font-family: Airbnb Cereal App;" class="text-center">Food Items</navbar-brand>      
+          </div>
           <b-navbar-nav>
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
           </b-navbar-nav>
 
           <b-collapse id="nav-collapse" is-nav>
-            
-
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-            
-                <router-link to="/search">
-                <b-icon icon="search" class="h3 mt-2" style="color:black"></b-icon>
-                </router-link>
+                <form @click="searchProduct">
+                  <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Search"
+                      aria-label="Search"
+                      v-model="search"
+                    />
+                </form>
 
               <b-nav-item-dropdown text="" right>
                 
-                <b-dropdown-item to="/">id</b-dropdown-item>
-                <b-dropdown-item to="/name">Berdasarkan Nama</b-dropdown-item>
-                <b-dropdown-item to="/update">Terbaru</b-dropdown-item>
-                <b-dropdown-item to="/price">price</b-dropdown-item>
+                <b-dropdown-item @click="filterProduct('id')">id</b-dropdown-item>
+                <b-dropdown-item @click="filterProduct('name')">Berdasarkan Nama</b-dropdown-item>
+                <b-dropdown-item @click="filterProduct('latest')">Terbaru</b-dropdown-item>
+                <b-dropdown-item @click="filterProduct('price')">price</b-dropdown-item>
               </b-nav-item-dropdown>
             </b-navbar-nav>
           </b-collapse>
@@ -43,12 +48,11 @@
                   <router-link to="/history">
                     <b-icon icon="clipboard-check" class="h1 ml-4" style="color:black"></b-icon>
                   </router-link>
-                    <b-icon icon="cart-plus" class="h1 ml-4" style="color:black;"></b-icon>
-                    <b-icon icon="plus" class="h1 ml-4" style="color:green; outline:none; cursor:pointer;" v-b-modal.modal-add></b-icon>
+                    <b-icon icon="cart-plus" class="h1 ml-4 ikon" style="color:black;"></b-icon>
+                    <b-icon icon="plus" class="h1 ml-4 ikon" style="color:green; outline:none; cursor:pointer;" v-b-modal.modal-add></b-icon>
                 </div>
                 <modalAdd :getProduct="getProduct" />  
           </div>
-
 
       <!-- RightBar -->
         <div class="place col-md-7 d-flex">
@@ -84,15 +88,12 @@
                       <div class="mt-4" style="margin-top:0px;">
                         <b-button-group size="sm" style="margin-top:-30px; margin-left:8px;">
                           <b-button @click="minus(item)" class="btn minus">-</b-button>
-                            <b-input-group size="sm">
-                              <b-form-input :value="amount(item)" style="text-align:center"></b-form-input>
-                            </b-input-group>
+                          <div class="box-count">1</div>
                           <b-button @click="plus(item)" class="btn plus">+</b-button>
                       </b-button-group> 
+                      
                       </div>
-              </div>
-                  
-                    
+              </div>  
                    <div v-if="cart.length > 0">
                      <h5>Total</h5>
                       <b-button block variant="info" style="margin-top:20px;"  v-b-modal.modal-checkout>CheckOut</b-button>
@@ -165,80 +166,38 @@ import modalEdit from "@/components/modalEdit"
 import modalAdd from "@/components/modalAdd";
 import Items from "../../components/Items";
 
-
 export default {
-  name: 'home',
-  components : {
-    Items,
-    modalAdd,
-    modalEdit
+name: 'home',
+components : {
+Items,
+modalAdd,
+modalEdit
+},
+
+data() {
+return { 
+    btnPlus: true,
+    data : [],
+    search: "",
+    cart : [],
+    max : '',
+  }
   },
-  
-  data() {
-    return { 
-        btnPlus: true,
-        form : {
-          id:'',
-          name: '',
-          price:'',
-          image: '',
-          date:'',
 
-        },
-        data : [],
-        cart : [],
-        max : '',
-      }
+async mounted() {
+this.getProduct()
+},
+methods: {
+addCart(data) {
+  this.cart.push(data)
+},
+getProduct(){
+  axios
+    .get(`${process.env.VUE_APP_URL}/api/product`,{
+      headers: {
+        token:localStorage.getItem("token")
       },
-
-   async mounted() {
-    this.load()
-  },
-      
-
-  methods: {
-    addCart(data) {
-      this.cart.push(data)
-    },
-      async load(){
-      const response = await axios.get(`${process.env.VUE_APP_URL}/api/product`)
-      this.data = response.data
-    },
-    plus(value) {
-        value.amount += 1;
-    },
-    minus(value) {
-        value.amount -= 1;
-        if (value.amount === 0) {
-          let findIndex = this.items.data.findIndex(
-            (index) => index.id === value.id
-          );
-          this.items.data.splice(findIndex, 1);
-        }
-    },
-      clear() {
-        this.cart = [];
-      },
-    edit(){
-      try {
-        const response = axios.put(`${process.env.VUE_APP_URL}/api/product`, this.form)
-        this.data = response.data
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    deleteProduct: async function(id) {
-        try {
-          await axios.delete(
-            `${process.env.VUE_APP_URL}/api/product/${id}`,
-            this.config
-          );
-          alert("Data Dihapus");
-          this.getProduct();
-        } catch (error) {
-          console.error(error);
-        }
-      },
+<<<<<<< HEAD
     search(){
       try {
         // const response = axios.delete(process.env.VUE_APP_URL, this.form)
@@ -255,27 +214,96 @@ export default {
 
     showImage(images) {
         return `/images/${images}`;
-      },
-
-    },
-    computed: {
-      amount : () => {
-        return (item) => item.amount;
-      }
+=======
+  })
+    .then((res) => {
+      console.log(res)
+      this.data = res.data;
+  })
+    .catch((err) => {
+      console.log(err)
+      this.data = [];
+    })
+},
+filterProduct(category) {
+  let url;
+    if (category == "id") {
+      url = "/api/product/id/filter?order=id";
+    } else if (category == "price") {
+      url = "/api/product/id/filter?order=price";
+    } else if (category == "name") {
+      url = "/api/product/id/filter?order=name";
+    } else if (category == "latest") {
+      url = "/api/product/id/filter?order=latest";
     }
+  axios
+    .get(process.env.VUE_APP_URL + url, {
+      headers: {
+        token: localStorage.getItem("token"),
+>>>>>>> ebfd3f0585caff15296d166500486591d798e315
+      },
+    })
+    .then((res) => {
+      console.log("from filter");
+      console.log(res);
+      this.data = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      this.data = [];
+    });
+},
+  deleteProduct: async function(id) {
+    try {
+      await axios.delete(
+        `${process.env.VUE_APP_URL}/api/product/${id}`,
+        this.config
+      );
+      alert("Data Dihapus");
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  searchProduct(){
+    axios
+    .get(
+      `${process.env.VUE_APP_URL}/api/product/id/search?name=${this.search}&sensitive=true`,
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    )
+    .then((res) => {
+      console.log("from search ");
+      this.data = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+      this.data = [];
+    });
+},
 
-    
-    
-  
- 
+showImage(images) {
+    return `${process.env.VUE_APP_URL}/${images}`;
+  }, 
+  clear() {
+    this.cart = [];
+},
+
+},
+computed: {
+  amount : () => {
+    return (item) => item.amount;
+  }
+}
+
 }
 
 </script>
 
 
-<style>
-
-
+<style> 
 .lingkaran{
     background: #57CAD5;
     border-radius: 100%;
@@ -327,21 +355,50 @@ export default {
     margin-left: 140px;
   }
   
+  .plus {
+  background: rgba(130, 222, 58, 0.2) !important;
+  border: 1px solid #82de3a !important;
+  box-sizing: border-box;
+  width: 30px;
+  text-align: center;
+  font-size: 30px;
+  height: 30px;
+  color: #82de3a !important;
+}
+.minus {
+  background: rgba(130, 222, 58, 0.2) !important;
+  border: 1px solid #82de3a !important;
+  box-sizing: border-box;
+  width: 30px;
+  text-align: center;
+  font-size: 30px;
+  height: 30px;
+  color: #82de3a !important;
+}
+.box-count {
+  background: #ffffff !important;
+  border: 1px solid #82de3a !important;
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  padding-top: 4px;
+  text-align: center;
+  color: #82de3a !important;
+}
   
 
   @media only screen and (max-width: 767px) {
-    .head-cart {
-    background-color: white;
-    height : 0px;
-    display : none;
-    }
-
-    .lingkaran {
-      display: none;
-    }
-    
+  .head-cart {
+  background-color: white;
+  height : 0px;
+  display : none !important;
   }
 
+  .lingkaran {
+    display: none;
+  }
+  }
+  
   @media only screen and (max-width: 767px) {
     .head-cart2 {
     background-color:#808080;
