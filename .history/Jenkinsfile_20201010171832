@@ -33,9 +33,7 @@ pipeline {
                 }
             }
             steps{
-                builderDocker.inside{
-                    sh 'echo passed'
-                }
+                echo 'testing.. '
             }
         }
 

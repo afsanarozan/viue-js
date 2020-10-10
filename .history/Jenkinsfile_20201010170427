@@ -1,6 +1,6 @@
 
 pipeline {
-    agent builderDocker
+
     agent any 
 
     parameters {
@@ -18,11 +18,11 @@ pipeline {
         }
 
         stage('Build Docker Image') {
+            
+            CommitHash = sh (script : "git long -n 1 --pretty-format: ''")
+
             steps{
-                script {
-                    CommitHash = sh (script : "git long -n 1 --pretty=format: '%H'", returnStdout: true)
-                    builderDocker = docker.build("nopal/frontend:${CommitHash}")
-                }
+
             }
         }
 
@@ -33,9 +33,7 @@ pipeline {
                 }
             }
             steps{
-                builderDocker.inside{
-                    sh 'echo passed'
-                }
+                echo 'testing.. '
             }
         }
 

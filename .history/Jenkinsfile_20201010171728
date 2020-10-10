@@ -21,7 +21,7 @@ pipeline {
             steps{
                 script {
                     CommitHash = sh (script : "git long -n 1 --pretty=format: '%H'", returnStdout: true)
-                    builderDocker = docker.build("nopal/frontend:${CommitHash}")
+                    builderDocker = docker.build("ecxample/)
                 }
             }
         }
@@ -33,9 +33,7 @@ pipeline {
                 }
             }
             steps{
-                builderDocker.inside{
-                    sh 'echo passed'
-                }
+                echo 'testing.. '
             }
         }
 
