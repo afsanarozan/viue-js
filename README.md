@@ -1,7 +1,7 @@
 
 # week-5
 
-just studying
+just studying hai fron github
 
 ## Project setup
 ```
