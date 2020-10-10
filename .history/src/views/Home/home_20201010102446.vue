@@ -266,7 +266,7 @@ filterProduct(category) {
 },
 
 showImage(images) {
-    return `${process.env.VUE_APP_URL}/${images}`;
+    return `${process.env.VUE_APP_URL}/images/${images}`;
   },
   clear() {
     this.cart = [];
@@ -280,6 +280,8 @@ computed: {
 }
 
 }
+
+
 
 </script>
 

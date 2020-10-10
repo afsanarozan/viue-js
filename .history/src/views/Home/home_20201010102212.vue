@@ -175,7 +175,7 @@ modalEdit
 },
 
 data() {
-return {
+return { 
     btnPlus: true,
     data : [],
     search: "",
@@ -197,6 +197,23 @@ getProduct(){
       headers: {
         token:localStorage.getItem("token")
       },
+<<<<<<< HEAD
+    search(){
+      try {
+        // const response = axios.delete(process.env.VUE_APP_URL, this.form)
+        const response = axios({
+          method: "GET",
+          url: `http://localhost:2000/product/search?name='${name}'` ,
+          data: {name : this.form.name}
+        })
+        this.data = response.data  
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    showImage(images) {
+        return `/images/${images}`;
   })
     .then((res) => {
       console.log(res)
@@ -222,6 +239,7 @@ filterProduct(category) {
     .get(process.env.VUE_APP_URL + url, {
       headers: {
         token: localStorage.getItem("token"),
+>>>>>>> ebfd3f0585caff15296d166500486591d798e315
       },
     })
     .then((res) => {
@@ -267,7 +285,7 @@ filterProduct(category) {
 
 showImage(images) {
     return `${process.env.VUE_APP_URL}/${images}`;
-  },
+  }, 
   clear() {
     this.cart = [];
 },
