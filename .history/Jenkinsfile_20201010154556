@@ -1,0 +1,14 @@
+// script
+node {
+    // script here
+}
+
+//declaratif
+
+pipeline {
+    satges {
+        stage{
+            
+        }
+    }
+}

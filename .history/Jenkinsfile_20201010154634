@@ -1,0 +1,17 @@
+// script
+node {
+    // script here
+}
+
+//declaratif
+
+pipeline {
+    
+    stages {
+        stage('bu') {
+            steps{
+
+            }
+        }
+    }
+}

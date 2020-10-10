@@ -1,0 +1,34 @@
+
+pipeline {
+
+    agent any 
+
+    parameters {
+        booleanParam(name: 'RunTest', defaultValue: true, description: 'Toggle this value for testing')
+        choice(name: 'CHOICE', choices: ['ci', 'Two', 'Three'], description: 'Pick something')
+    }
+    stages {
+        stage('build Project') {
+            steps{
+                echo 'build...'
+            }
+        }
+
+        stage('Run Testing') {
+            when {
+                expression {
+                    params.RunTest
+                }
+            }
+            step {
+                echo 'testing.. '
+            }
+        }
+
+        stage('Deploy') {
+            step {
+                echo 'testing.. '
+            }
+        }
+    }
+}

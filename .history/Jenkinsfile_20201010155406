@@ -1,0 +1,25 @@
+// script
+node {
+    // script here
+}
+
+//declaratif
+
+pipeline {
+
+    agent
+
+    stages {
+        stage('build Project') {
+            steps{
+                echo 'build...'
+            }
+        }
+
+        stage('Run Testing') {
+            step {
+                echo 'testing.. '
+            }
+        }
+    }
+}

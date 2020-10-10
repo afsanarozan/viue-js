@@ -1,0 +1,39 @@
+
+pipeline {
+
+    agent any 
+
+    parameters {
+        booleanParam(name: 'RunTest', defaultValue: true, description: 'Toggle this value for testing')
+        choice(name: 'CI/CD', choices: ['CI', 'CICD'], description: 'Pick something')
+    }
+    stages {
+        stage('build Project') {
+            steps{
+                echo 'build...'
+            }
+        }
+
+        stage('Run Testing') {
+            when {
+                expression {
+                    params.RunTest
+                }
+            }
+            step {
+                echo 'testing.. '
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                expression {
+                    params.C == 'CICD'
+                }
+            }
+            step {
+                echo 'testing.. '
+            }
+        }
+    }
+}

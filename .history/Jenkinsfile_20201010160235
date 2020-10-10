@@ -1,0 +1,34 @@
+
+pipeline {
+
+    agent any 
+
+    parameters {
+        booleanParam(name: 'T', defaultValue: true, description: 'Toggle this value')
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+    }
+    stages {
+        stage('build Project') {
+            steps{
+                echo 'build...'
+            }
+        }
+
+        stage('Run Testing') {
+            when {
+                expression {
+                    BRANCH_NAME == "master" || BRANCH_NAME == "staging"
+                }
+            }
+            step {
+                echo 'testing.. '
+            }
+        }
+
+        stage('Deploy') {
+            step {
+                echo 'testing.. '
+            }
+        }
+    }
+}

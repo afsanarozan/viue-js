@@ -1,0 +1,32 @@
+// script
+node {
+    // script here
+}
+
+//declaratif
+
+pipeline {
+
+    stages {
+        stage('build Project') {
+            steps{
+                echo 'build...'
+            }
+        }
+
+        stage('Run Testing') {
+            when {
+                
+            }
+            step {
+                echo 'testing.. '
+            }
+        }
+
+        stage('Deploy') {
+            step {
+                echo 'testing.. '
+            }
+        }
+    }
+}

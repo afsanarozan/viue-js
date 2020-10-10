@@ -1,0 +1,33 @@
+
+pipeline {
+
+    agent any 
+
+    parameters {
+        choice
+    }
+    stages {
+        stage('build Project') {
+            steps{
+                echo 'build...'
+            }
+        }
+
+        stage('Run Testing') {
+            when {
+                expression {
+                    BRANCH_NAME == "master" || BRANCH_NAME == "staging"
+                }
+            }
+            step {
+                echo 'testing.. '
+            }
+        }
+
+        stage('Deploy') {
+            step {
+                echo 'testing.. '
+            }
+        }
+    }
+}

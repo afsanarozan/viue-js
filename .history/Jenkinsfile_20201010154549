@@ -1,0 +1,8 @@
+// script
+node {
+    // script here
+}
+
+//declaratif
+
+pipeline {}
