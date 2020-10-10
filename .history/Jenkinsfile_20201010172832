@@ -35,10 +35,11 @@ pipeline {
                 }
             }
             steps{
-                script {    
+                script {
+                        
                     builderDocker.inside{
                         sh 'echo passed'
-                    }
+                }
                 }
             }
         }

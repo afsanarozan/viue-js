@@ -38,7 +38,7 @@ pipeline {
                 script {    
                     builderDocker.inside{
                         sh 'echo passed'
-                    }
+                }
                 }
             }
         }
