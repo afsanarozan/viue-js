@@ -43,7 +43,7 @@ pipeline {
             }
         }
 
-        stage('Push Image') {
+        stage('Run Testing') {
             when {
                 expression {
                     params.RunTest
@@ -51,11 +51,13 @@ pipeline {
             }
             steps{
                 script {    
-                    builderDocker.push("${env.GIT_BRANCH}")
+                    builderDocker.inside{
+                        sh 'echo passed'
+                    }
                 }
             }
         }
-
+        
         stage('Deploy') {
             when {
                 expression {
