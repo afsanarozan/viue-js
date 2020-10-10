@@ -1,6 +1,6 @@
 
 def builderDocker
-def CommitHash
+def co
 
 pipeline {
     agent any 
