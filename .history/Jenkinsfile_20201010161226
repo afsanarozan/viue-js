@@ -10,7 +10,7 @@ pipeline {
     stages {
 
         stage('build Project') {
-            steps{
+            step{
                 echo 'build...'
             }
         }
@@ -21,7 +21,7 @@ pipeline {
                     params.RunTest
                 }
             }
-            steps{
+            step {
                 echo 'testing.. '
             }
         }
@@ -32,7 +32,7 @@ pipeline {
                     params.CICD == 'CICD'
                 }
             }
-            steps{
+            step {
                 echo 'testing.. '
             }
         }
