@@ -50,10 +50,8 @@ pipeline {
                 }
             }
             steps{
-                      withDockerRegistry([ credentialsId: "docker-hub-credentials", url: "" ]) {
-                      bat "docker push 32480/example:master"
-                   
-                    
+                script {    
+                    builderDocker.push("${env.GIT_BRANCH}")
                 }
             }
         }
