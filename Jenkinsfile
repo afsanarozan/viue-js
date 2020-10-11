@@ -43,18 +43,18 @@ pipeline {
             }
         }
 
-        // stage('Push Image') {
-        //     when {
-        //         expression {
-        //             params.RunTest
-        //         }
-        //     }
-        //     steps{
-        //         script {    
-        //             builderDocker.push("${env.GIT_BRANCH}")
-        //         }
-        //     }
-        // }
+        stage('Push Image') {
+            when {
+                expression {
+                    params.RunTest
+                }
+            }
+            steps{
+                script {    
+                    builderDocker.push("${env.GIT_BRANCH}")
+                }
+            }
+        }
 
         stage('Deploy') {
             when {
