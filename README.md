@@ -2,7 +2,7 @@
 # week-5
 
 just studying 
-hai...!!
+tes hai...!!
 
 ## Project setup
 ```
