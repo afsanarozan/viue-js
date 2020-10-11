@@ -50,8 +50,11 @@ pipeline {
                 }
             }
             steps{
-                script {    
-                    builderDocker.push("${env.GIT_BRANCH}")
+                script {
+                      withDockerRegistry([ credentialsId: "docker-hub-credentials", url: "" ]) {
+                      bat builderDocker.push("${env.GIT_BRANCH}")
+                       }    
+                    
                 }
             }
         }
