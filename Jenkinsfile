@@ -71,7 +71,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'docker pull 32480/frontend:master; docker kill example; docker run -d --rm --name frontend -p 8080 32480/frontend:master',
+                                        execCommand: 'docker pull 32480/frontend:master; docker kill example; docker run -d --rm --name frontend -p 8080:80 32480/frontend:master',
                                         execTimeout: 120000,
                                     )
                                 ]
