@@ -23,7 +23,7 @@ pipeline {
             steps{
                 script {
                     CommitHash = sh (script : "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                    builderDocker = docker.build("32480/example_frontend:${CommitHash}")
+                    builderDocker = docker.build("32480/example:${CommitHash}")
                 }
             }
         }
@@ -71,7 +71,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'docker pull 32480/example_frontend:master; docker kill example_frontend; docker run -d --rm --name frontend -p 8080:80 32480/example_frontend:master',
+                                        execCommand: 'docker pull 32480/example:master; docker kill example; docker run -d --rm --name frontend -p 8080:80 32480/example:master',
                                         execTimeout: 120000,
                                     )
                                 ]
