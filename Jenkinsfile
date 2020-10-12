@@ -86,7 +86,7 @@ pipeline {
         stage('Deploy to Development') {
             when {
                 expression {
-                    branch 'prod'
+                    BRANCH_NAME ='prod'
                     params.CICD == 'CICD'
                 }
             }
