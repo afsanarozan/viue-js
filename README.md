@@ -2,7 +2,7 @@
 # week-5
 
 just studying 
-tes dari branch prod!
+tes dari branch master!
 
 ## Project setup
 ```
