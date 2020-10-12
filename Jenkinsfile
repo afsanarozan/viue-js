@@ -55,9 +55,36 @@ pipeline {
                 }
             }
         }
+        // stage('Deploy to Production') {
+        //     when {
+        //         ${env.GIT_BRANCH} == "prod"
+        //         expression {
+        //             params.CICD == 'CICD'
+        //         }
+        //     }
+        //     steps{
+        //        script {
+        //             sshPublisher(
+        //                 publishers: [
+        //                     sshPublisherDesc(
+        //                         configName: 'production',
+        //                         verbose: false,
+        //                         transfers: [
+        //                             sshTransfer(
+        //                                 execCommand: 'docker pull 32480/frontend:master; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:master',
+        //                                 execTimeout: 120000,
+        //                             )
+        //                         ]
+        //                     )
+        //                 ]
+        //             )
+        //         }
+        //     }
+        // } 
 
-        stage('Deploy') {
+        stage('Deploy to Development') {
             when {
+                ${env.GIT_BRANCH} == "dev"
                 expression {
                     params.CICD == 'CICD'
                 }
@@ -71,7 +98,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'docker pull 32480/frontend:master; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:master',
+                                        execCommand: 'docker pull 32480/frontend:dev; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:master',
                                         execTimeout: 120000,
                                     )
                                 ]
