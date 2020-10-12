@@ -70,7 +70,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'docker pull 32480/frontend:master; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:master',
+                                        execCommand: 'docker pull 32480/frontend:prod; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:prod',
                                         execTimeout: 120000,
                                     )
                                 ]
@@ -84,7 +84,7 @@ pipeline {
         stage('Deploy to Development') {
             when {
                 expression {
-                    BRANCH_NAME == "prod"
+                    BRANCH_NAME == "dev"
                 }
             }
             steps{
@@ -96,7 +96,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'docker pull 32480/frontend:prod; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:prod',
+                                        execCommand: 'docker pull 32480/frontend:dev; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:dev',
                                         execTimeout: 120000,
                                     )
                                 ]
