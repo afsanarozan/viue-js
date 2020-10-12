@@ -45,6 +45,7 @@ pipeline {
 
         stage('Push Image') {
             when {
+                branch 'dev'
                 expression {
                     params.RunTest
                 }
