@@ -59,7 +59,7 @@ pipeline {
         stage('Deploy to production') {
             when {
                 expression {
-                    branch 'master'
+                    BRANCH_NAME ='master'
                     params.CICD == 'CICD'
                 }
             }
