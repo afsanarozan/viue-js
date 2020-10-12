@@ -8,6 +8,7 @@ pipeline {
     parameters {
         booleanParam(name: 'RunTest', defaultValue: true, description: 'Toggle this value for testing')
         choice(name: 'CICD', choices: ['CI', 'CICD'], description: 'Pick something')
+        
     }
     stages {
 
@@ -45,7 +46,6 @@ pipeline {
 
         stage('Push Image') {
             when {
-                branch 'dev'
                 expression {
                     params.RunTest
                 }
@@ -85,8 +85,8 @@ pipeline {
 
         stage('Deploy to Development') {
             when {
-                ${env.GIT_BRANCH} == "ev"
                 expression {
+                    branch 'prod'
                     params.CICD == 'CICD'
                 }
             }
@@ -99,7 +99,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'docker pull 32480/frontend:dev; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:master',
+                                        execCommand: 'docker pull 32480/frontend:prod; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:prod',
                                         execTimeout: 120000,
                                     )
                                 ]
