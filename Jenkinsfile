@@ -84,7 +84,7 @@ pipeline {
 
         stage('Deploy to Development') {
             when {
-                ${env.GIT_BRANCH} == "dev"
+                ${env.GIT_BRANCH} == "ev"
                 expression {
                     params.CICD == 'CICD'
                 }
