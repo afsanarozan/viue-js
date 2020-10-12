@@ -24,7 +24,7 @@ pipeline {
             steps{
                 script {
                     CommitHash = sh (script : "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                    builderDocker = docker.build("32480/example:${CommitHash}")
+                    builderDocker = docker.build("32480/frontend:${CommitHash}")
                 }
             }
         }
