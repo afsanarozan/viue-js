@@ -59,7 +59,7 @@ pipeline {
         stage('Deploy to production') {
             when {
                 expression {
-                    BRANCH_NAME == "master"
+                    BRANCH_NAME != "prod"
                     params.CICD == "CICD"
                 }
             }
@@ -83,7 +83,7 @@ pipeline {
             }
         }
 
-        stage('Deploy toDevelopment') {
+        stage('Deploy to Development') {
             when {
                 expression {
                     BRANCH_NAME == "prod"
