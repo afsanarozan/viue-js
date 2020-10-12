@@ -60,7 +60,6 @@ pipeline {
             when {
                 expression {
                     BRANCH_NAME != "prod"
-                    params.CICD == "CICD"
                 }
             }
             steps{
