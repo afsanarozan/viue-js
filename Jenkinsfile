@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage('ansible') {
+        stage('ansible for development') {
             when {
                 expression {
                     BRANCH_NAME == "dev"
@@ -45,7 +45,7 @@ pipeline {
             }
         }
 
-        stage('ansible') {
+        stage('ansible for production') {
             when {
                 expression {
                     BRANCH_NAME == "master"
