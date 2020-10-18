@@ -86,8 +86,9 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'ssh ansman@172.31.82.152; curl localhost:8080',
-                                        execTimeout: 120000,
+                                        execCommand: 'ssh ansman@172.31.82.152',
+                                        execCommand: 'curl localhost:8080',
+                                        execTimeout: 60000,
                                     )
                                 ]
                             )
