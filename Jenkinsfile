@@ -112,28 +112,13 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'ansible prod-server -a "curl localhost:8080"',
+                                        execCommand: 'ansible dev-server -a "curl localhost:8080"',
                                         execTimeout: 60000,
                                     )
                                 ]
                             )
                         ]
                     )
-                }
-            }
-        }
-
-        stage('Run Testing') {
-            when {
-                expression {
-                    params.RunTest
-                }
-            }
-            steps{
-                script {    
-                    builderDocker.inside{
-                        sh 'echo passed ${BRANCH_NAME}'
-                    }
                 }
             }
         }
