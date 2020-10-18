@@ -71,20 +71,72 @@ pipeline {
             }
         }
 
-        // stage('Run Testing') {
-        //     when {
-        //         expression {
-        //             params.RunTest
-        //         }
-        //     }
-        //     steps{
-        //         script {    
-        //             builderDocker.inside{
-        //                 sh 'echo passed ${BRANCH_NAME}'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Run Testing production') {
+            when {
+                expression {
+                    BRANCH_NAME == "prod"  
+                }
+            }
+            steps{
+               script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ansible',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'ssh ansman@172.31.82.152; curl localhost:8080',
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        } 
+
+        stage('Run Testing Development') {
+            when {
+                expression {
+                    BRANCH_NAME == "prod" || BRANCH_NAME == "dev"
+                }
+            }
+            steps{
+               script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ansible',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'ssh ansman@172.31.16.90; curl localhost:8080',
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+
+        stage('Run Testing') {
+            when {
+                expression {
+                    params.RunTest
+                }
+            }
+            steps{
+                script {    
+                    builderDocker.inside{
+                        sh 'echo passed ${BRANCH_NAME}'
+                    }
+                }
+            }
+        }
 
         // stage('Push Image') {
         //     when {
