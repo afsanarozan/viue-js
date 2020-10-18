@@ -45,6 +45,32 @@ pipeline {
             }
         }
 
+        stage('ansible') {
+            when {
+                expression {
+                    BRANCH_NAME == "master"
+                }
+            }
+            steps{
+               script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ansible',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'cd ansible; ansible-playbook -i hosts docker.yml',
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+
         // stage('Run Testing') {
         //     when {
         //         expression {
