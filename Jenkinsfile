@@ -48,7 +48,7 @@ pipeline {
         stage('ansible for production') {
             when {
                 expression {
-                    BRANCH_NAME == "master"
+                    BRANCH_NAME == "prod"
                 }
             }
             steps{
