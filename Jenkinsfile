@@ -86,20 +86,8 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'ssh ansman@172.31.82.152',
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ansible',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        execCommand: 'curl localhost:8080',
+                                        execCommand: 'ansible prod-server -a "curl localhost:8080"',
+                                        execTimeout: 60000,
                                     )
                                 ]
                             )
@@ -124,8 +112,8 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'ssh ansman@172.31.16.90; curl localhost:8080',
-                                        execTimeout: 120000,
+                                        execCommand: 'ansible prod-server -a "curl localhost:8080"',
+                                        execTimeout: 60000,
                                     )
                                 ]
                             )
