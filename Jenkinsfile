@@ -87,8 +87,19 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         execCommand: 'ssh ansman@172.31.82.152',
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ansible',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
                                         execCommand: 'curl localhost:8080',
-                                        execTimeout: 60000,
                                     )
                                 ]
                             )
