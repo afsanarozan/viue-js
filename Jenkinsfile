@@ -19,69 +19,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps{
-                script {
-                    CommitHash = sh (script : "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                    builderDocker = docker.build("32480/frontend:${CommitHash}")
-                }
-            }
-        }
-
-        stage('Run Testing') {
-            when {
-                expression {
-                    params.RunTest
-                }
-            }
-            steps{
-                script {    
-                    builderDocker.inside{
-                        sh 'echo passed ${BRANCH_NAME}'
-                    }
-                }
-            }
-        }
-
-        stage('Push Image') {
-            when {
-                expression {
-                    params.RunTest
-                }
-            }
-            steps{
-                script {    
-                    builderDocker.push("${env.GIT_BRANCH}")
-                }
-            }
-        }
-        stage('Deploy to production') {
-            when {
-                expression {
-                    BRANCH_NAME == "master"
-                }
-            }
-            steps{
-               script {
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'production',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        execCommand: 'docker pull 32480/frontend:prod; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:prod',
-                                        execTimeout: 120000,
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        }
-
-        stage('Deploy to Development') {
+        stage('ansible') {
             when {
                 expression {
                     BRANCH_NAME == "dev"
@@ -92,11 +30,11 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'Developmen',
+                                configName: 'ansible',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'docker pull 32480/frontend:dev; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:dev',
+                                        execCommand: 'cd ansible; ansible-playbook -i hosts advance-server.yml',
                                         execTimeout: 120000,
                                     )
                                 ]
@@ -106,5 +44,84 @@ pipeline {
                 }
             }
         }
+
+        // stage('Run Testing') {
+        //     when {
+        //         expression {
+        //             params.RunTest
+        //         }
+        //     }
+        //     steps{
+        //         script {    
+        //             builderDocker.inside{
+        //                 sh 'echo passed ${BRANCH_NAME}'
+        //             }
+        //         }
+        //     }
+        // }
+
+        // stage('Push Image') {
+        //     when {
+        //         expression {
+        //             params.RunTest
+        //         }
+        //     }
+        //     steps{
+        //         script {    
+        //             builderDocker.push("${env.GIT_BRANCH}")
+        //         }
+        //     }
+        // }
+        // stage('Deploy to production') {
+        //     when {
+        //         expression {
+        //             BRANCH_NAME == "master"
+        //         }
+        //     }
+        //     steps{
+        //        script {
+        //             sshPublisher(
+        //                 publishers: [
+        //                     sshPublisherDesc(
+        //                         configName: 'production',
+        //                         verbose: false,
+        //                         transfers: [
+        //                             sshTransfer(
+        //                                 execCommand: 'docker pull 32480/frontend:prod; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:prod',
+        //                                 execTimeout: 120000,
+        //                             )
+        //                         ]
+        //                     )
+        //                 ]
+        //             )
+        //         }
+        //     }
+        // }
+
+        // stage('Deploy to Development') {
+        //     when {
+        //         expression {
+        //             BRANCH_NAME == "dev"
+        //         }
+        //     }
+        //     steps{
+        //        script {
+        //             sshPublisher(
+        //                 publishers: [
+        //                     sshPublisherDesc(
+        //                         configName: 'Developmen',
+        //                         verbose: false,
+        //                         transfers: [
+        //                             sshTransfer(
+        //                                 execCommand: 'docker pull 32480/frontend:dev; docker kill frontend;docker run -d --rm -p 8080:80 --name frontend 32480/frontend:dev',
+        //                                 execTimeout: 120000,
+        //                             )
+        //                         ]
+        //                     )
+        //                 ]
+        //             )
+        //         }
+        //     }
+        // }
     }
 }
