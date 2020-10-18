@@ -35,7 +35,6 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         execCommand: 'cd ansible; ansible-playbook -i hosts advance-server.yml',
-                                        execTimeout: 120000,
                                     )
                                 ]
                             )
@@ -61,7 +60,6 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         execCommand: 'cd ansible; ansible-playbook -i hosts docker.yml',
-                                        execTimeout: 120000,
                                     )
                                 ]
                             )
