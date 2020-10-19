@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage('ansible for development') {
+        stage('Build image') {
             when {
                 expression {
                     BRANCH_NAME == "dev"
@@ -44,7 +44,7 @@ pipeline {
             }
         }
 
-        stage('ansible for production') {
+        stage('Build Image') {
             when {
                 expression {
                     BRANCH_NAME == "prod"
@@ -59,7 +59,57 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd ansible; ansible-playbook -i hosts docker.yml',
+                                        execCommand: 'cd ansible; ansible-playbook -i hosts frontend.yml',
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+
+        stage('deployment to development') {
+            when {
+                expression {
+                    BRANCH_NAME == "prod" || BRANCH_NAME == "dev"
+                }
+            }
+            steps{
+               script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ansible',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'cd ansible; ansible-playbook -i hosts frontend-cd.yml',
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+
+        stage('deployment to production') {
+            when {
+                expression {
+                    BRANCH_NAME == "prod"
+                }
+            }
+            steps{
+               script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ansible',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'cd ansible; ansible-playbook -i hosts frontend-cd.yml',
                                     )
                                 ]
                             )
