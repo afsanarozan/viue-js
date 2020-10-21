@@ -29,7 +29,7 @@
                       <div class="invalid-feedback">please fill out this file</div>
                     </div>
                     <div class="form-group">
-                        <div class="row align-items-center remember">
+                        <div class="remember">
                             <input type="checkbox">Remember Me
                         </div>
                     </div>
@@ -236,8 +236,8 @@ color: black;
 .remember input
 {
 width: 20px;
-height: 20px;
-margin-left: 20px;
+height: 15px;
+margin-left: -160px;
 margin-top: 5px;
 }
 
