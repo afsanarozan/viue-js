@@ -101,11 +101,7 @@ export default {
 </script>
 
 <style scoped>
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 body{
     background: #fbf3ff;
@@ -246,11 +242,12 @@ body{
 .remember{
 color: black;
 }
+
 .remember input
 {
 width: 20px;
-height: 20px;
-margin-left: 20px;
+height: 15px;
+margin-left: -160px;
 margin-top: 5px;
 }
 
