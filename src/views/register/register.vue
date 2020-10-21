@@ -38,17 +38,14 @@
                       <div class="invalid-feedback">please fill out this file</div>
                     </div>
                     <div class="form-group">
-                        <div class="row align-items-center remember">
+                        <div class="remember">
                             <input type="checkbox">Remember Me
                         </div>
                     </div>
 
                     <input type="submit" class="butt" value="login">
                     <div class="d-flex justify-content-center links">
-                        Don't have an account?<a href="#">Sign Up</a>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="#">Forgot your password?</a>
+                        have an account?<router-link to="/"><a href="#">Sign in</a></router-link>
                     </div>
               </form>
             </div>
