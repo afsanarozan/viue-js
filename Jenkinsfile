@@ -34,7 +34,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd ansible; ansible-playbook -i hosts advance-server.yml',
+                                        execCommand: 'cd ansible2;cd ansible; ansible-playbook -i hosts builder.yml',
                                     )
                                 ]
                             )
@@ -59,7 +59,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd ansible; ansible-playbook -i hosts frontend.yml',
+                                        execCommand: 'cd ansible2;cd ansible; ansible-playbook -i hosts builder.yml',
                                     )
                                 ]
                             )
