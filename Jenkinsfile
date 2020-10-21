@@ -59,7 +59,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd ansible2/ansible/frontend; ansible-playbook -i hosts builder.ymll',
+                                        execCommand: 'cd ansible2/ansible/frontend; ansible-playbook -i hosts builder.yml',
                                     )
                                 ]
                             )
