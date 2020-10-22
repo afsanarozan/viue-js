@@ -244,7 +244,7 @@ color: black;
 {
 width: 20px;
 height: 15px;
-margin-left: -160px;
+margin-left: -70px;
 margin-top: 5px;
 }
 
