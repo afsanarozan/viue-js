@@ -73,7 +73,7 @@ pipeline {
         stage('deployment to development') {
             when {
                 expression {
-                    BRANCH_NAME == "prod" || BRANCH_NAME == "dev" && CICD == 'CICD'
+                    BRANCH_NAME == "dev" && CICD == 'CICD'
                 }
             }
             steps{
@@ -123,7 +123,7 @@ pipeline {
         stage('Run Testing production') {
             when {
                 expression {
-                    BRANCH_NAME == "prod"  
+                    BRANCH_NAME == "prod"  && CICD == 'CICD'
                 }
             }
             steps{
@@ -149,7 +149,7 @@ pipeline {
         stage('Run Testing Development') {
             when {
                 expression {
-                    BRANCH_NAME == "prod" || BRANCH_NAME == "dev"
+                    BRANCH_NAME == "dev" && CICD == 'CICD'
                 }
             }
             steps{
