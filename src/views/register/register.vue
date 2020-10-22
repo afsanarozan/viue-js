@@ -39,11 +39,11 @@
                     </div>
                     <div class="form-group">
                         <div class="remember">
-                            <input type="checkbox">Remember Me
+                            <input type="checkbox">I agress to the Terms And Privacy Policy
                         </div>
                     </div>
 
-                    <input type="submit" class="butt" value="login">
+                    <input type="submit" class="butt" value="Daftar">
                     <div class="d-flex justify-content-center links">
                         have an account?<router-link to="/"><a href="#">Sign in</a></router-link>
                     </div>
