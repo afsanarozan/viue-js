@@ -2,14 +2,15 @@ version: '3.3'
 services:
 
     frontend:
-        image: afsanarozan/cafe-frontend:prod
+        build:
+            context: ./
         container_name: frontend
         ports:
             - 8080:80
         networks: 
             - deploy
         environment:
-            - VUE_APP_URL=http://localhost:2000     
+            - VUE_APP_URL=http://3.92.223.179   
 
 networks:
     deploy:
