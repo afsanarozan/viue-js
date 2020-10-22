@@ -73,7 +73,7 @@ export default {
     methods: {
       loginUser () {
             axios
-            .post(`http://3.92.223.179/auth`, {
+            .post(`${process.env.VUE_APP_URL}/auth`, {
             name: this.name,
             password: this.password,
             })
