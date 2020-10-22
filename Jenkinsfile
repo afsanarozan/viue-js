@@ -7,6 +7,7 @@ pipeline {
 
     parameters {
         booleanParam(name: 'RunTest', defaultValue: true, description: 'Toggle this value for testing')
+        choice(name: 'CICD', choices: ['CI', 'CICD'], description: 'pick CI / CI and CD')
         
     }
     stages {
@@ -72,7 +73,7 @@ pipeline {
         stage('deployment to development') {
             when {
                 expression {
-                    BRANCH_NAME == "prod" || BRANCH_NAME == "dev"
+                    BRANCH_NAME == "prod" || BRANCH_NAME == "dev" || CICD == "CICD"
                 }
             }
             steps{
@@ -97,7 +98,7 @@ pipeline {
         stage('deployment to production') {
             when {
                 expression {
-                    BRANCH_NAME == "prod"
+                    BRANCH_NAME == "prod" || CICD == "CICD"
                 }
             }
             steps{
