@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <div class="remember">
-                            <input type="checkbox">I agress to the Terms And Privacy Policy
+                            <input type="checkbox"> I agree to the Terms And Privacy Policy
                         </div>
                     </div>
 
@@ -238,13 +238,14 @@ body{
 
 .remember{
 color: black;
+font-size: small;
 }
 
 .remember input
 {
 width: 20px;
 height: 15px;
-margin-left: -70px;
+margin-left: -40px;
 margin-top: 5px;
 }
 
