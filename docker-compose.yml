@@ -2,7 +2,7 @@ version: '3.3'
 services:
 
     frontend:
-        image: afsanarozan/cafe-frontend:dev
+        image: afsanarozan/cafe-frontend:prod
         container_name: frontend
         ports:
             - 8080:80
