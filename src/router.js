@@ -3,6 +3,7 @@ import VueRouter from "vue-router"
 import home  from  './views/Home/home' 
 import about from './views/History/history'
 import register from './views/register/register'
+import editProduct from "@/views/edit/editProduct"
 import login2 from './views/login/login2'
 
 Vue.use(VueRouter)
@@ -27,6 +28,12 @@ const routes = [
         path: "/register",
         name: "register",
         component: register,
+    },
+    {
+        path: "/edit",
+        name: "editProduct",
+        component: editProduct,
+        props: route => ({ query: route.query.q })
     },
 ]
 
