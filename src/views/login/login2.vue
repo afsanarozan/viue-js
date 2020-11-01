@@ -85,7 +85,7 @@ export default {
                     alert("Login Berhasil");
                     this.$router.push({ name: "home" });
                 } else {
-                    alert(res.data.message);
+                    alert("Authentication Failed");
                 }
             });
         },

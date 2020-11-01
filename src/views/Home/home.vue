@@ -95,7 +95,13 @@
                       </div>
               </div>  
                    <div v-if="cart.length > 0">
-                     <h5>Total</h5>
+                     <h5>Total 
+                       {{
+                          new Intl.NumberFormat("id-ID", {
+                            maximumSignificantDigits: 3,
+                          }).format(cart.price)
+                       }}
+                     </h5>
                       <b-button block variant="info" style="margin-top:20px;"  v-b-modal.modal-checkout>CheckOut</b-button>
                       <b-button block variant="danger" @click="clear">Cancel</b-button>      
                         
