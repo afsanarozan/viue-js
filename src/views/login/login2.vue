@@ -48,7 +48,7 @@
             <div class="myRightCtn">
               <div class="box">
                 <header>Coffee Cafe</header>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio sunt ratione facilis sapiente fugit laborum aliquid id doloremque consequatur soluta quia blanditiis, eveniet pariatur non, odio iusto dolore inventore. Sequi.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio sunt ratione facilis sapiente fugit laborum aliquid id doloremque consequatur soluta quia blanditiis, eveniet pariatur non, odio iusto dolore inventore.</p>
                 <input type="button" class="butt_out" value="Learn more" />
               </div>
             </div>
