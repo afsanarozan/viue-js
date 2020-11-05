@@ -5,7 +5,7 @@ services:
         image: afsanarozan/cafe-frontend:dev
         container_name: frontend
         ports:
-            - 8080:80
+            - 80:80
         networks: 
             - deploy
         environment:
