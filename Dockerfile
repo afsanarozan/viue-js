@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-ENV VUE_APP_URL='http://52.90.193.211:9191'
+ENV VUE_APP_URL='http://54.91.176.62:9191'
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
