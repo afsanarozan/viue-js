@@ -50,7 +50,7 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         remoteDirectory: "cafe-frontend",
-                                        execCommand: "sudo docker build -t afsanarozan/cafe-frontend:dev .",
+                                        execCommand: "cd cafe-frontend; sudo docker build -t afsanarozan/cafe-frontend:dev .",
                                         execTimeout: 60000,
                                     )
                                 ]
