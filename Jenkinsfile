@@ -12,18 +12,14 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                builderDocker.inside {
-                    sh 'echo passed'
-                }
+                sh 'echo passed'
             }
         }
 
         stage('Run Testing') {
             steps{
                 script {
-                    builderDocker.inside {
-                        sh 'echo passed'
-                    }
+                    sh 'echo passed'
                 }
             }
         }
