@@ -10,9 +10,23 @@ pipeline {
         
     }
     stages {
-        stage('Build Docker Image') {
-            steps {
-                sh 'echo passed'
+        stage('Clone Code') {
+            steps{
+               script {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'nopal',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git',
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
             }
         }
 
@@ -35,7 +49,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git',
+                                        execCommand: 'cd cafe-frontend; docker build -t afsanarozan/cafe-frontend:dev .',
                                     )
                                 ]
                             )
