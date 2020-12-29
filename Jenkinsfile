@@ -49,8 +49,9 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        remoteDirectory: 'cafe-frontend',
-                                        execCommand: 'cd cafe-frontend && sudo docker build -t afsanarozan/cafe-frontend:dev .',
+                                        sourceFiles: "Dockerfile"
+                                        remoteDirectory: "cafe-frontend",
+                                        execCommand: "sudo docker build -t afsanarozan/cafe-frontend:dev .",
                                         execTimeout: 60000,
                                     )
                                 ]
@@ -76,8 +77,8 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd cafe-frontend && sudo docker-compose up -d',
-                                        execTimeout: 60000,
+                                        execCommand: 'cd cafe-frontend; sudo docker-compose up -d',
+                                        execTimeout: 120000,
                                     )
                                 ]
                             )
@@ -103,7 +104,7 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         execCommand: 'curl localhost:8080',
-                                        execTimeout: 60000,
+                                        execTimeout: 120000,
                                     )
                                 ]
                             )
