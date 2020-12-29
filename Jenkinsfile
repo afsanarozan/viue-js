@@ -49,7 +49,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        sourceFiles: "Dockerfile"
+                                        sourceFiles: "Dockerfile",
                                         remoteDirectory: "cafe-frontend",
                                         execCommand: "sudo docker build -t afsanarozan/cafe-frontend:dev .",
                                         execTimeout: 60000,
