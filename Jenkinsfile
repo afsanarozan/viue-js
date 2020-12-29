@@ -20,7 +20,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git'script,
+                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git',
                                     )
                                 ]
                             )
