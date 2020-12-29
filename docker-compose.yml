@@ -9,7 +9,7 @@ services:
         networks: 
             - deploy
         environment:
-            - VUE_APP_URL=http://3.92.223.179:9191
+            - VUE_APP_URL=http://18.206.186.76:9191
         
 
 networks:

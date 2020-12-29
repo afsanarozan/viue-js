@@ -21,11 +21,11 @@ pipeline {
 
         stage('Run Testing') {
             script {
-                    builderDocker.inside {
-                        sh 'echo passed'
-                    }
+                builderDocker.inside {
+                    sh 'echo passed'
                 }
             }
+        }
         
 
         stage('Build Image') {
@@ -34,11 +34,11 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ansible',
+                                configName: 'nopal',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd ansible2/ansible/frontend; ansible-playbook -i hosts builderprod.yml',
+                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend/tree/dev && cd cafe-frontend && docker build -t afsanarozan/cafe-frontend:dev .',
                                     )
                                 ]
                             )
@@ -48,10 +48,10 @@ pipeline {
             }
         }
 
-        stage('deployment to development') {
+        stage('Deployment') {
             when {
                 expression {
-                    BRANCH_NAME == "dev" && CICD == 'CICD'
+                    CICD == 'CICD'
                 }
             }
             steps{
@@ -59,11 +59,11 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ansible',
+                                configName: 'nopal',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd ansible2/ansible/frontend; ansible-playbook -i hosts deployDev.yml',
+                                        execCommand: 'cd cafe-frontend && docker-compose up -d',
                                     )
                                 ]
                             )
@@ -73,10 +73,10 @@ pipeline {
             }
         }
 
-               stage('Run Testing Development') {
+        stage('Run Testing Development') {
             when {
                 expression {
-                    BRANCH_NAME == "dev" && CICD == 'CICD'
+                    CICD == 'CICD'
                 }
             }
             steps{
@@ -84,11 +84,11 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ansible',
+                                configName: 'nopal',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'ansible dev-server -a "curl localhost:8080"',
+                                        execCommand: 'curl localhost:8080',
                                         execTimeout: 60000,
                                     )
                                 ]
@@ -98,56 +98,5 @@ pipeline {
                 }
             }
         }
-
-        stage('deployment to production') {
-            when {
-                expression {
-                    BRANCH_NAME == "prod" && CICD == 'CICD'
-                }
-            }
-            steps{
-               script {
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ansible',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        execCommand: 'cd ansible2/ansible/frontend; ansible-playbook -i hosts deployProd.yml',
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        }
-
-        stage('Run Testing production') {
-            when {
-                expression {
-                    BRANCH_NAME == "prod"  && CICD == 'CICD'
-                }
-            }
-            steps{
-               script {
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ansible',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        execCommand: 'ansible prod-server -a "curl localhost:8080"',
-                                        execTimeout: 60000,
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        } 
     }
 }
