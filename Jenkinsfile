@@ -35,7 +35,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git && cd cafe-frontend && docker build -t afsanarozan/cafe-frontend:dev .',
+                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git',
                                     )
                                 ]
                             )
