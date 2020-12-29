@@ -76,6 +76,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
+                                        remoteDirectory: "cafe-frontend",
                                         execCommand: 'cd cafe-frontend; sudo docker-compose up -d',
                                         execTimeout: 120000,
                                     )
