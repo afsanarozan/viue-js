@@ -50,6 +50,7 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         execCommand: 'cd cafe-frontend && sudo docker build -t afsanarozan/cafe-frontend:dev .',
+                                        execTimeout: 60000,
                                     )
                                 ]
                             )
@@ -75,6 +76,7 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         execCommand: 'cd cafe-frontend && sudo docker-compose up -d',
+                                        execTimeout: 60000,
                                     )
                                 ]
                             )
