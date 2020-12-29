@@ -20,7 +20,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git',
+                                        execCommand: 'git clone https://github.com/afsanarozan/cafe-frontend.git'script,
                                     )
                                 ]
                             )
@@ -49,7 +49,6 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        sourceFiles: "Dockerfile",
                                         remoteDirectory: "cafe-frontend",
                                         execCommand: "sudo docker build -t afsanarozan/cafe-frontend:dev .",
                                         execTimeout: 60000,
