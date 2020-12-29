@@ -20,9 +20,11 @@ pipeline {
         }
 
         stage('Run Testing') {
-            script {
-                builderDocker.inside {
-                    sh 'echo passed'
+            steps{
+                script {
+                    builderDocker.inside {
+                        sh 'echo passed'
+                    }
                 }
             }
         }
