@@ -49,7 +49,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd cafe-frontend; docker build -t afsanarozan/cafe-frontend:dev .',
+                                        execCommand: 'cd cafe-frontend && sudo docker build -t afsanarozan/cafe-frontend:dev .',
                                     )
                                 ]
                             )
@@ -74,7 +74,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: 'cd cafe-frontend && docker-compose up -d',
+                                        execCommand: 'cd cafe-frontend && sudo docker-compose up -d',
                                     )
                                 ]
                             )
