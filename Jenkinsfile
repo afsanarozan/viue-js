@@ -10,46 +10,25 @@ pipeline {
         
     }
     stages {
-
-        stage('build Project') {
-            steps{
-                nodejs("node12") {
-                    sh 'yarn install'
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    CommitHash = sh (script : "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                    builderDocker = docker.build("afsanarozan/cafe-frontend:${CommitHash}")
                 }
             }
         }
 
-        stage('Build image') {
-            when {
-                expression {
-                    BRANCH_NAME == "dev"
+        stage('Run Testing') {
+            script {
+                    builderDocker.inside {
+                        sh 'echo passed'
+                    }
                 }
             }
-            steps{
-               script {
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ansible',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        execCommand: 'cd ansible2/ansible/frontend; ansible-playbook -i hosts builderdev.yml',
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        }
+        
 
         stage('Build Image') {
-            when {
-                expression {
-                    BRANCH_NAME == "prod"
-                }
-            }
             steps{
                script {
                     sshPublisher(

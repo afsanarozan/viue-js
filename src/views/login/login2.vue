@@ -95,7 +95,7 @@ export default {
 
 <style scoped>
 body{
-    background: #fbf3ff;
+    background-image: url(../../assets/A_small_cup_of_coffee.jpg) !important;
 }
 
 .container{
@@ -110,7 +110,7 @@ body{
 
 .myRightCtn{
     position: relative;
-    background-image: linear-gradient(45deg, #f046ff, #9b00e8);
+    background-image: linear-gradient(45deg, #325a49, #6adef8);
     border-radius: 25px;
     height: 100%;
     padding: 25px;
@@ -132,7 +132,7 @@ body{
 }
 
 .myLeftCtn header {
-    color: blueviolet;
+    color: rgb(100, 157, 170);
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 20px;
@@ -185,7 +185,7 @@ body{
 }
 
 .myLeftCtn .butt {
-    background: linear-gradient(45deg, #bb36fd, #9b00e8);
+    background: linear-gradient(45deg, #5a9179, #6adef8);
     color: #fff;
     width: 230px;
     border: none;
@@ -197,7 +197,7 @@ body{
 }
 
 .myLeftCtn .butt:hover {
-    background: linear-gradient(45deg, #c85bff, #b726ff);
+    background: linear-gradient(45deg, #57ac87, #6adef8);
 }
 
 .myLeftCtn .butt:focus {
